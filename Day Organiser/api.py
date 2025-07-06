@@ -6,7 +6,7 @@ import uvicorn
 # Initialize FastAPI app
 app = FastAPI(
     title="Day Organiser LLM API",
-    description="A REST API for LLM interactions using LangGraph and OpenAI",
+    description="A REST API for intelligent day organization using LangGraph and OpenAI",
     version="1.0.0"
 )
 
@@ -14,11 +14,11 @@ app = FastAPI(
 llm_client = LLMClient()
 
 # Request model
-class PromptRequest(BaseModel):
-    prompt: str
+class ActivityRequest(BaseModel):
+    activity: str
 
 # Response model
-class LLMResponse(BaseModel):
+class OrganizationResponse(BaseModel):
     response: str
     status: str = "success"
 
@@ -27,22 +27,22 @@ async def root():
     """Health check endpoint"""
     return {"message": "Day Organiser LLM API is running!"}
 
-@app.post("/api/chat", response_model=LLMResponse)
-async def chat_with_llm(request: PromptRequest):
+@app.post("/api/organize", response_model=OrganizationResponse)
+async def organize_activity(request: ActivityRequest):
     """
-    Send a prompt to the LLM and get a response
+    Organize an activity by parsing, validating, and scheduling it
     
     Args:
-        request: PromptRequest containing the user's prompt
+        request: ActivityRequest containing the activity description
         
     Returns:
-        LLMResponse containing the LLM's response
+        OrganizationResponse containing the organization results
     """
     try:
-        response = llm_client.get_response(request.prompt)
-        return LLMResponse(response=response)
+        response = llm_client.get_response(request.activity)
+        return OrganizationResponse(response=response)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing request: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error organizing activity: {str(e)}")
 
 @app.get("/api/health")
 async def health_check():

@@ -3,14 +3,14 @@ from llm_client import LLMClient
 def test_llm():
     client = LLMClient()
     
-    # Test prompt
-    test_prompt = "What is the capital of France?"
-    print(f"Test prompt: {test_prompt}")
+    # Test activity organization
+    test_activity = "I want to learn TypeScript for 2 hours tomorrow"
+    print(f"Test activity: {test_activity}")
     
     try:
-        response = client.get_response(test_prompt)
-        print(f"LLM Response: {response}")
-        print("✅ LLM test successful!")
+        response = client.get_response(test_activity)
+        print(f"Organization Response:\n{response}")
+        print("✅ Day organization test successful!")
     except Exception as e:
         print(f"❌ Error: {e}")
 

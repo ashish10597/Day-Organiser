@@ -15,22 +15,22 @@ def test_api():
     
     print("\n" + "="*50 + "\n")
     
-    # Test chat endpoint
-    print("Testing chat endpoint...")
-    test_prompt = "What is the weather like today?"
+    # Test organize endpoint
+    print("Testing organize endpoint...")
+    test_activity = "I want to learn TypeScript for 2 hours tomorrow"
     
     payload = {
-        "prompt": test_prompt
+        "activity": test_activity
     }
     
     try:
         response = requests.post(
-            f"{base_url}/api/chat",
+            f"{base_url}/api/organize",
             json=payload,
             headers={"Content-Type": "application/json"}
         )
         
-        print(f"Chat endpoint status: {response.status_code}")
+        print(f"Organize endpoint status: {response.status_code}")
         if response.status_code == 200:
             result = response.json()
             print(f"Response: {result['response']}")
@@ -39,7 +39,7 @@ def test_api():
             print(f"Error: {response.text}")
             
     except Exception as e:
-        print(f"Chat endpoint failed: {e}")
+        print(f"Organize endpoint failed: {e}")
 
 if __name__ == "__main__":
     test_api() 
